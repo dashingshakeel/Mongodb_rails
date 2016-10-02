@@ -3,6 +3,8 @@ require "./lib/models/issue.rb"
 class App < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
+  register Sinatra::Partial
+  use Rack::MethodOverride
 
 
   get "/" do
@@ -30,6 +32,10 @@ class App < Sinatra::Base
     haml :"issues/edit"
   end
   put "/issues/:id" do
+    @issue= Issue.find params[:id]
+    if @issue.update_attributes params[:issue]
+      redirect "/"
+    end
     
   end
 end
