@@ -1,0 +1,24 @@
+%h1
+ =@issue.name
+.well
+ =@issue.description
+
+
+
+%h2 All comments
+%ul.list-unstyled
+ -@issue.comments.each do |comment|
+  %li 
+   %blockquote
+    %p=comment.body
+    %footer
+     #{comment.name}
+     %em=comment.id.generation_time.ago_in_words
+
+%form(action="/issues/#{@issue.id}/comments" method="post")
+ %p 
+  %input.form-control(name="comment[name]" type="text" placeholder="yourname")
+ %p
+  %textarea.form-control(name="comment[body]" placeholder="comments")
+ %p
+  %button.btn.btn-primary Submit 
